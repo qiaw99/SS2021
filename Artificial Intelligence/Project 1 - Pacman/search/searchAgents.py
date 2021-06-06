@@ -266,6 +266,7 @@ def euclideanHeuristic(position, problem, info={}):
 # This portion is incomplete.  Time to write code!  #
 #####################################################
 
+#There are four beans on the four corners of the maze, find them. -Question 5 
 class CornersProblem(search.SearchProblem):
     """
     This search problem finds paths through all four corners of a layout.
@@ -377,7 +378,7 @@ def minmanhattan(corners, pos):
         hn.append(dis)
     return min(hn)
 
-
+#Corner problem with heuristics. -Question 6
 def cornersHeuristic(state, problem):
     """
     A heuristic for the CornersProblem that you defined.
