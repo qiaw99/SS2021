@@ -266,7 +266,7 @@ def euclideanHeuristic(position, problem, info={}):
 # This portion is incomplete.  Time to write code!  #
 #####################################################
 
-#There are four beans on the four corners of the maze, find them. -Question 5 
+#There are four beans on the four corners of the maze, find them. 
 class CornersProblem(search.SearchProblem):
     """
     This search problem finds paths through all four corners of a layout.
@@ -289,8 +289,9 @@ class CornersProblem(search.SearchProblem):
         # Please add any code here which you would like to use
         # in initializing the problem
         "*** YOUR CODE HERE ***"
-        self._corners = list(self.corners) # Change the tupel into a list, so actually self._corners here should be [(1,1), (1,top), (right, 1), (right, top)]
-
+        self._corners = list(self.corners) 
+        # Change the tupel into a list, so actually self._corners here should be [(1,1), (1,top), (right, 1), (right, top)]
+        # and these are the location of fours corners -Q5
     def getStartState(self):
         """
         Returns the start state (in your state space, not the full Pacman state
@@ -299,6 +300,7 @@ class CornersProblem(search.SearchProblem):
         "*** YOUR CODE HERE ***"
         #util.raiseNotDefined()
         return ([],self.startingPosition)
+        #starting Pacman Position #Q5
 
     def isGoalState(self, state):
         """
@@ -378,7 +380,17 @@ def minmanhattan(corners, pos):
         hn.append(dis)
     return min(hn)
 
-#Corner problem with heuristics. -Question 6
+
+"""
+-Question 6
+#Corner problem with heuristics. 
+- node is the state[1]
+- we define a list which includes the corners that are not visited, i.e the item in corner which this item is not in state[0]
+- and then we define hn which is to calculate the minimum Manhattan value of all the corners that have not passed 
+                      through to the present, which must be smaller than the actual distance (for this we defined a 
+                      minmanhattan function which is above.)
+- hn is the return value
+"""
 def cornersHeuristic(state, problem):
     """
     A heuristic for the CornersProblem that you defined.
@@ -498,9 +510,22 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    #The gold is to eat all the beans with as few steps as possible
+
+    """
+    Q7
+    The gold to build the proper heuristic to eat all the beans with as few steps as possible.
+    - Firstly, by using asList(), it returns the parse results of as a nested list of matching tokens, 
+    all converted to strings, i.e. to get a list of food coordinate
+    - If there is no such list (no food coordinate), just return 0.
+    - Then we define two variables, max_heuristic and total_heuristic, and set the initial value to 0.
+    - For every food in food_grid, we calculate the distance between food and position,by using the function mazeDistance.
+    The state is problem.startingGameState.
+    - For each roop we add the result to total_heuristic, and we will choose the maximum result as the max_heuristic at the end.
+    - Then we get the average_heuristic which is total_heuristic / the length of the list food_grid.
+    - Finally we will return (max_heu + average_heu) / 2 as the return value of this function.
+    """ 
     food_grid = foodGrid.asList() 
-    #Returns the parse results of as a nested list of matching tokens, all converted to strings.
+ 
     if not food_grid:
         return 0
     max_heuristic = 0
